@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+<section class="banner-container">
+    <div class="banner-slideshow">
+      {% if lastItems and lastItems|length > 0 %}
+            {% for item in lastItems %}
+            <div class="banner-slide">
+               <img src="{{ item.imageUrl }}" alt="{{ item.category }}">
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>No products available to display.</p>
+        {% endif %}
+      
+    </div>
+    <button class="prev">&#10094;</button>
+    <button class="next">&#10095;</button>
+ </section>
+    
+    
+
+{% endblock %}

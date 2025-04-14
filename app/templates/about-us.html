@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+About us 
+{% endblock %}
+
+{% block content %}
+<div class="responsive-container-block bigContainer">
+    <div class="responsive-container-block Container bottomContainer">
+      <div class="ultimateImg">
+        
+        <img src="{{ url_for('static', filename='img/about_1.jpg') }}" class="mainImg">
+        <div class="purpleBox">
+          <p class="purpleText">
+            Anna Priscilla is the visionary behind ABC, a boutique event decorating service that transforms ordinary spaces into extraordinary experiences. With over 5 years of experience in the event industry, Anna is passionate about crafting unique, bespoke designs that capture the essence of every special occasion. From intimate weddings to grand corporate events, Anna blends creativity, attention to detail, and a love for vibrant aesthetics to bring clients’ visions to life. 
+							
+          </p>
+          <img class="stars" src="https://workik-widget-assets.s3.amazonaws.com/widget-assets/images/mp5.svg">
+        </div>
+      </div>
+      <div class="allText bottomText">
+        <p class="text-blk headingText">
+            Our Story
+        </p>
+       
+        <p class="text-blk description">
+            Anna’s Boutique City (ABC) is a small business founded in South Africa in 2021. Since its founding ,ABC has successfully made over 50,000 scrunchies . ABC is where products are hand made with love, it is also a home of many different colours on quality products. “When you Support local, you Support a dream”
+						
+        </p>
+        <a class="explore" href="/">
+          View Services
+        </a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

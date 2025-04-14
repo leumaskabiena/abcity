@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ product.category }}
+{% endblock %}
+
+{% block content %}
+
+    
+<div class="checkout-wrapper">
+    <div class="cart-section-product" >
+        
+        <div class="gallery-container">
+            <img src="{{ product.imageUrl }}" alt="Main product image" class="main-image" id="mainImage">
+            <div class="thumbnail-container">
+                {% for img in product.imageUrls %}
+                    <img 
+                        src="{{ img }}" 
+                        alt="Thumbnail {{ loop.index0 }}" 
+                        class="thumbnail {% if loop.index0 == 0 %}active{% endif %}" 
+                        onclick="updateMainImage(this)">
+                {% endfor %}
+            </div>
+        </div>
+       
+    </div>
+
+    <div class="order-summary-product">
+        <div class="product-details">
+            <h1 class="input-field-product">{{ product.name }}</h1>
+            <div class="input-field-product">R {{ product.price }}</div>
+            <p class="input-field-product">
+                {{ product.description }}
+            </p>
+
+            <div class="options-container">
+                {% if product.sizes and product.sizes|length > 0 %}
+                    <select name="size" id="size">
+                        <option disabled {% if not product.old_size %}selected{% endif %}>Select Size</option>
+                        {% for size in product.sizes %}
+                            <option value="{{ size }}" {% if product.old_size == size %}selected{% endif %}>
+                                {{ size }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                {% endif %}
+            
+
+                {% if product.colors or product.colors|length > 0 %}
+                    <select name="color" id="color">
+                        <option disabled {% if not old_color %}selected{% endif %}>Select Color</option>
+                        {% for color in product.colors %}
+                            <option value="{{ color }}" {% if product.old_color == color %}selected{% endif %}>
+                                {{ color }}
+                            </option>
+                        {% endfor %}
+
+                      
+                    </select>
+                    <div class="dropDownSelect2"></div>
+                {% endif %}
+            </div>
+
+            <div class="quantity-container">
+                <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                <input type="number" value="{{ product.old_qty if product.old_qty else 1 }}" min="1" class="quantity-input mtext-104 cl3 txt-center num-product" id="quantity" name="num-product">
+                <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+            </div>
+            <div class="quantity-container">
+                <input type="hidden" name="isCartUpdate" value="{{ product.isCartUpdate if product else '' }}">
+                <input type="hidden" name="old_size" value="{{ product.old_size if product and product.old_size else '' }}">
+                <input type="hidden" name="old_color" value="{{ product.old_color if product and product.old_color else '' }}">
+
+
+                <button class="submit-button" data-product-id="{{ product.id }}" onclick="addToCart(this)">
+                    {{ product.tag if product.tag else 'Add to cart' }}
+                </button>
+                
+                
+                
+                {% if session.get('isAuthenticated') %}
+
+                <input type="hidden" name="product_id" value="{{ product.id if product else '' }}">
+               
+                <!-- Dropdown Menu -->
+                <form action="/edit-product/{{ product.id if product else '' }}" method="GET">
+                    <button type="submit" class="submit-button">Edit</button>
+    
+                </form>
+               
+                
+                <form action="/delete-product/{{ product.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                    <button type="submit" class="submit-button">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                    </button>
+                </form>
+                
+                {% endif %}
+
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+{% endblock %}

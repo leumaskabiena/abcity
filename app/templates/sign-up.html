@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sign-up
+{% endblock %}
+
+{% block content %}
+
+<section class="login-page" >
+    <div class="login-container">
+
+        <form method="POST" action="{{ url_for('auth.sign_up') }}">
+            <h2 class="mb-4">Sign-up</h2>
+          
+            <div class="mb-3">
+                <input type="name" name="name" class="form-control" id="email" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" id="password" placeholder="Enter your password" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="confirm_pass" class="form-control" id="password" placeholder="confirm your password" required>
+            </div>
+              <!-- Flash messages -->
+              {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+              <div class="alert alert-danger" role="alert">
+                  {% for category, message in messages %}
+                      {{ message }}
+                  {% endfor %}
+              </div>
+              {% endif %}
+          {% endwith %}
+            <button type="submit" class="btn btn-primary">Sign-up</button>
+        </form>
+    </div>
+</section>
+
+
+{% endblock %}

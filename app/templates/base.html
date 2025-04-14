@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>{% block title %}Home{% endblock %}</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+   </head>
+   <body>
+      <header>
+         <div class="header-left">
+            <a href="/" class="logo">
+                <img src="{{ url_for('static', filename='img/logo3-transparent.png') }}" alt="Logo" class="logo-img">
+            </a>
+            <!-- <i class="fa-solid fa-cart-shopping cart-icon"></i> -->
+         </div>
+         <div class="header-right">
+            <nav>
+                <a href="/">Home</a>
+            
+                
+            
+                {% if session.get('isAuthenticated') %}
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown">
+                        <a href="#" class="dropdown-toggle">Create</a>
+                        <div class="sub-menu">
+                            <a href="/create-product">New Product</a>
+                            <a href="/create-product">New Category</a>
+                            <a href="/sign-up">New User</a>
+                            <a href="/setup_whatsapp">whatsapp</a>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if session.get('isAuthenticated') %}
+                    <a href="/logout" class="flex-c-m trans-04 p-lr-25">Logout</a>
+                {% else %}
+                    <a href="/login" class="flex-c-m trans-04 p-lr-25">Account</a>
+                {% endif %}
+            
+                <a href="/about-us">About</a>
+            </nav>
+            
+            <button class="cart-icon" onclick="GetCart(this)">
+                <img src="{{ url_for('static', filename='img/white-shopping-cart-icon-9.jpg') }}" alt="Add to cart" class="cart-icon-img">
+                
+            </button>
+            
+            <!-- <input type="text" class="search-input" placeholder="Search movies" /> -->
+         </div>
+      </header>
+      <main>
+     
+        
+        {% block content %}{% endblock %}
+        <div id="cart-list-container" class="cart-container">
+            <div id="cart-list-content">
+              <!-- Cart content will be injected here -->
+            </div>
+            <!-- <button onclick="closeCartList()">Close Cart</button> -->
+          </div>
+         
+        <section class="gallery">
+           
+            {% if products and products|length > 0 %}
+            {% for item in products %}
+            <div class="gallery-item" onclick="window.location.href='/product-details?id={{ item.id }}'">
+                <img src="{{ item.imageUrl }}" alt="{{ item.category }}">
+                <div class="item-details">
+                    <h3>{{ item.name }}</h3>
+                    <p class="price">R {{ item.price }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+         
+        {% endif %}
+           
+            <!-- Add more items as needed -->
+        </section>
+        
+      </main>
+      
+<footer class="footer-distributed">
+
+			<div class="footer-left">
+
+                <img src="{{ url_for('static', filename='img/logo5.PNG') }}" class="mainImg">
+
+				
+
+				<!-- <p class="footer-company-name">Company Name © 2015</p> -->
+			</div>
+
+			<div class="footer-center">
+
+				<div>
+					<!-- <i class="fa fa-map-marker"></i> -->
+					<!-- <p><span>444 S. Cedros Ave</span> Solana Beach, California</p> -->
+				</div>
+
+				<div>
+					<i class="fa fa-phone"></i>
+					<p>+27 678 189 775</p>
+				</div>
+
+				<div>
+					<!-- <i class="fa fa-envelope"></i> -->
+					<!-- <p><a href="mailto:support@company.com">support@company.com</a></p> -->
+				</div>
+
+			</div>
+
+			<div class="footer-right">
+
+				<p class="footer-company-about">
+					<span href="/about-us" >About the company</span>Anna Priscilla takes pride in offering a personalized touch to every project, ensuring that each event is a reflection of the client’s personality and style.
+				</p>
+
+				<div class="footer-icons">
+
+					<a href="https://www.instagram.com/annas_boutique_city?igsh=YzljYTk1ODg3Zg==" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@annas_boutique_city?_t=8on2XaYRBaP&_r=1" target="_blank">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+					
+
+				</div>
+
+			</div>
+
+		</footer>
+    
+    
+      <script src="{{ url_for('static', filename='script.js') }}"></script>
+      <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+   </body>
+</html>

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create
+{% endblock %}
+
+{% block content %}
+
+<section class="theme">
+    <!-- Flash messages -->
+    <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="alert alert-danger" role="alert">
+        {% for category, message in messages %}
+            {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %} -->
+    
+    <div class="prod-wrapper">
+        <!-- Edit Product Form -->
+        <div class="prod-container">
+            <form action="/edit-product/{{ product.id if product else '' }}" method="POST">
+                <div class="prod-form">
+                    <div class="form-section">
+                        <input type="hidden" name="product_id" value="{{ product.id if product else '' }}">
+                        <div class="input-group">
+                            <label class="input-label" for="name">Name</label>
+                            <input id="name" name="name" class="input-field" placeholder="Enter Name" value="{{ product.name if product else '' }}">
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="price">Price</label>
+                            <input id="price" name="price" class="input-field" placeholder="Enter Price" value="{{ product.price if product else '' }}">
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="category">Category</label>
+                            <select id="category" name="category" class="input-field input-select">
+                                <option value="">Select a category</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.name }}"
+                                        {% if product and product.category == category.name %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="color">Color</label>
+                            <input id="color" name="color" class="input-field" placeholder="Enter color" value="{{ product.color if product else '' }}">
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="size">Size</label>
+                            <input id="size" name="size" class="input-field" placeholder="Enter size" value="{{ product.size if product else '' }}">
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="description">Description</label>
+                            <textarea id="description" name="description" class="input-field input-textarea" placeholder="Enter product description">{{ product.description if product else '' }}</textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label" for="imageUrl">Image URL</label>
+                            <input type="text" id="imageUrl" name="imageUrl" class="input-field" placeholder="Enter image URL" value="{{ product.imageUrl if product else '' }}">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-button">Save Changes</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Edit Category Form -->
+        <div class="prod-container">
+            <form action="/update-category-name/{{ product.id if category else '' }}" method="POST">
+                <div class="prod-form">
+                    <div class="form-section">
+                        <!-- Hidden Input to Pass Product ID -->
+                        <div class="input-group">
+                            <input type="hidden" name="product_id" value="{{ product.id if product else '' }}">
+                        </div>
+            
+                        <!-- Dropdown to Select Category Old Name -->
+                        <div class="input-group">
+                            <label class="input-label" for="category_old_name">Category Old Name</label>
+                            <select id="category_old_name" name="category_old_name" class="input-field input-select">
+                                <option value="">Select a category</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.name }}"
+                                        {% if product and product.category == category.name %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+            
+                        <!-- Input to Specify New Category Name -->
+                        <div class="input-group">
+                            <label class="input-label" for="category_new_name">Category New Name</label>
+                            <input id="category_new_name" name="category_new_name" class="input-field" placeholder="Enter New Name" value="">
+                        </div>
+                    </div>
+            
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-button">Save Changes</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</section>
+
+
+
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+<div class="checkout-wrapper">
+    <div class="cart-section">
+        <div class="cart-header">
+            <h2>New Product</h2>
+    
+           
+        </div>
+        <form action="/create-product" method="POST">
+            <div class="prod-form">
+                <div class="form-section">
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="name">Name</label> -->
+                        <input id="name" name="name" class="input-field-product" placeholder="Enter Name" value="{{ product.color if product else '' }}">
+                    </div>
+
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="price">Price</label> -->
+                        <input id="price" name="price" class="input-field-product" placeholder="Enter Price" value="{{ product.size if product else '' }}">
+                    </div>
+
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="category">Category</label> -->
+                        <select id="category" name="category" class="input-field input-select">
+                            <option value="">Select a category</option>
+                            {% for category in categories %}
+                                <option value="{{ category.name }}"
+                                    {% if product and product.category == category.name %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="color">Color</label> -->
+                        <input id="color" name="color" class="input-field-product" placeholder="Enter color" value="{{ product.color if product else '' }}">
+                    </div>
+
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="size">Size</label> -->
+                        <input id="size" name="size" class="input-field-product" placeholder="Enter size" value="{{ product.size if product else '' }}">
+                    </div>
+
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="description">Description</label> -->
+                        <textarea id="description" name="description" class="input-field-product input-textarea" placeholder="Enter product description">{{ product.description if product else '' }}</textarea>
+                    </div>
+
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="imageUrl">Image URL</label> -->
+                        <input type="text" id="imageUrl" name="imageUrl" class="input-field-product" placeholder="Enter image URL" value="{{ product.imageUrl if product else '' }}">
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-button">Save Product</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="order-summary">
+        <div class="cart-header">
+            <h2>New Catgory</h2>
+    
+           
+        </div>
+        <form action="/create-category" method="POST">
+            <div class="prod-form">
+                <div class="form-section">
+                    <div class="input-group">
+                        <!-- <label class="input-label" for="category_name">Name</label> -->
+                        <input id="category_name" name="category_name" class="input-field" placeholder="Enter Name">
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-button">Save Category</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

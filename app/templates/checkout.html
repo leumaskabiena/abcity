@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+Checkout
+{% endblock %}
+
+{% block content %}
+<div class="checkout-wrapper">
+    <div class="cart-section">
+        <!-- <form action="/update-cart" method="POST"> -->
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+        
+                {% if cartItems %}
+                <span><p>Items in your cart: {{ cartItems|length }}</p></span>
+                {% endif %}
+            </div>
+            <div class="cart-items">
+        
+                {% if cartItems %}
+                {% for item in cartItems %}
+        
+                <div class="cart-item">
+                    <img src="{{ item.imageUrl }}" alt="Product">
+                    <div class="item-details">
+                        <h3>{{ item.category }}</h3>
+                        <p>
+                            {{ item.name }}
+                            {% if item.color and item.color != 'none' %}
+                            | Color: {{ item.color }}
+                            {% endif %}
+                            {% if item.size and item.size != 'none' %}
+                            | Size: {{ item.size }}
+                            {% endif %}
+                            | Qty: {{ item.quantity }}
+                        </p>
+                    </div>
+
+                    <div class="item-details">R {{ item.price }}</div>
+        
+                    <div class="item-details">
+                        <form action="/update-cart-item" method="POST"> 
+                            <input type="hidden" name="color" value="{{ item.color if item.color else '' }}">
+                            <input type="hidden" name="size" value="{{ item.size if item.size else '' }}">
+                            <input type="hidden" name="quantity" value="{{ item.quantity if item.quantity else '1' }}">
+                            <input type="hidden" name="item_id" value="{{ item.id  }}">
+                            <button type="submit" class="quantity-btn submit-button">
+                                <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                            </button>
+                        </form>
+                        
+                        
+                        <!-- <input type="number"
+                               value="{{ item.quantity }}"
+                               min="1"
+                               class="quantity-input"
+                               id="quantity-{{ item.id }}" /> -->
+                        
+                        <form action="/delete-cart-item/{{ item.id }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                            <button type="submit" class=" quantity-btn submit-button">
+                                <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                            </button>
+                        </form>
+                    </div>
+                    
+                </div>
+        
+                {% endfor %}
+                {% else %}
+                <p class="text-center text-muted">Your cart is empty.</p>
+                {% endif %}
+            </div>
+            
+        <!-- </form> -->
+    </div>
+    <form action="/send_order" method="POST">
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="order-input">
+                <input type="text" name="full_name" placeholder="Full Name" required>
+                <input type="email" name="email" placeholder="Email Address" required>
+                <input type="tel" name="tel" placeholder="Phone Number" required>
+            </div>
+            <div class="totals">
+                <!-- <div class="total-line">
+                    <span>Subtotal</span>
+                    <span>R {{ subtotal }}</span>
+                </div> -->
+                <!-- <div class="total-line">
+                    <span>VAT (15%)</span>
+                    <span>R {{ vat }}</span>
+                </div> -->
+                <div class="total-line" style="font-weight: bold; color: var(--primary-color);">
+                    <span>Total</span>
+                    <span>R  {{ total }}</span>
+                </div>
+            </div>
+            <button class="btn-order">Complete Order</button>
+        </div>
+
+    </form>
+    
+</div>
+
+{% endblock %}
